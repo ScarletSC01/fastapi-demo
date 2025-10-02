@@ -27,7 +27,8 @@ pipeline {
             steps {
                 sh '''
                     cd fastapi-demo
-                    pip install -r requirements.txt
+            export PATH=$HOME/.local/bin:$PATH
+            pip install --user -r requirements.txt
                 '''
             }
         }
@@ -35,8 +36,9 @@ pipeline {
         stage('Ejecutar tests') {
             steps {
                 sh '''
-                    cd fastapi-demo
-                    pytest --maxfail=1 --disable-warnings -q
+                      cd fastapi-demo
+            export PATH=$HOME/.local/bin:$PATH
+            pytest --maxfail=1 --disable-warnings -q
                 '''
             }
         }
