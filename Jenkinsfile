@@ -12,10 +12,10 @@ pipeline {
     stages {
         stage('Clonar repo con credencial') {
             steps {
-                withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
-                    sh '''
-                        rm -rf fastapi-demo
-                        git clone https://$GITHUB_TOKEN@github.com/ScarletSC01/fastapi-demo.git
+               withCredentials([usernamePassword(credentialsId: 'github-token', usernameVariable: 'GIT_USER', passwordVariable: 'GIT_TOKEN')]) {
+    sh '''
+        rm -rf fastapi-demo
+        git clone https://$GIT_USER:$GIT_TOKEN@github.com/ScarletSC01/fastapi-demo.git
                         cd fastapi-demo
                         ls -la
                     '''
