@@ -10,8 +10,8 @@ pipeline {
     stages {
         stage('Clonar repo') {
             steps {
-                git branch: 'main', url: 'https://github.com/<tu-usuario>/fastapi-demo.git'
-            }
+                git branch: 'main', url: 'https://github.com/ScarletSC01/fastapi-demo.git' 
+                credentialsId: 'github-token'}
         }
 
         stage('Instalar dependencias') {
