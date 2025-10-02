@@ -1,6 +1,6 @@
 pipeline {
     agent any
-
+ 
     environment {
         PROJECT_ID = "jenkins-terraform-demo-472920"
         REGION     = "us-central1"
