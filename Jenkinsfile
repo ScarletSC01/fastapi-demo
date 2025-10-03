@@ -95,10 +95,10 @@ pipeline {
 
     post {
         success {
-            echo 'Pipeline ejecutado exitosamente ✅'
+            echo 'Pipeline ejecutado exitosamente '
         }
         failure {
-            echo 'Pipeline falló ❌'
+            echo 'Pipeline fall '
         }
     }
 }
