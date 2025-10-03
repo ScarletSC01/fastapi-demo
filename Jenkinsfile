@@ -101,5 +101,3 @@ pipeline {
             echo 'Pipeline fall'
         }
     }
-}
-
