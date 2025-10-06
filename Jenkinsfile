@@ -7,6 +7,8 @@ pipeline {
         SERVICE    = "fastapi-demo"
         IMAGE_NAME = "fastapi-demo"
         REPO       = "fastapi-repo"
+        KEY_PATH   = "/var/lib/jenkins/jenkins-sa-key.json"
+        SERVICE_ACCOUNT = "jenkins-sa@jenkins-terraform-demo-472920.iam.gserviceaccount.com"
     }
 
     stages {
@@ -72,10 +74,19 @@ pipeline {
             }
         }
 
+        //Autenticación antes de subir a Artifact Registry
+        stage('Autenticarse con Service Account') {
+            steps {
+                sh '''
+                    gcloud auth activate-service-account $SERVICE_ACCOUNT --key-file=$KEY_PATH
+                    gcloud auth configure-docker $REGION-docker.pkg.dev -q
+                '''
+            }
+        }
+
         stage('Subir imagen a Artifact Registry') {
             steps {
                 sh '''
-                    gcloud auth configure-docker $REGION-docker.pkg.dev -q
                     docker push $REGION-docker.pkg.dev/$PROJECT_ID/$REPO/$IMAGE_NAME:$BUILD_NUMBER
                 '''
             }
@@ -103,3 +114,4 @@ pipeline {
         }
     }
 }
+
