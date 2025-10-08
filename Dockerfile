@@ -1,22 +1,14 @@
-# Usa la imagen oficial de Python como base
-FROM python:3.11-slim
+FROM python:3.12-slim
 
-# Establece el directorio de trabajo dentro del contenedor
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
 WORKDIR /app
 
-# Copia los archivos de requerimientos y código al contenedor
 COPY requirements.txt .
-COPY main.py .
-
-# Instala dependencias
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expone el puerto 8080 (Cloud Run lo usará a través de $PORT)
-EXPOSE 8080
+COPY app ./app
 
-# Define la variable de entorno PORT para compatibilidad con Cloud Run
-ENV PORT 8080
-
-# Comando para ejecutar FastAPI usando uvicorn, respetando el puerto dinámico de Cloud Run
-CMD ["sh", "-c", "uvicorn main:app --host 0.0.0.0 --port $PORT"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
 
